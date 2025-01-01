@@ -22,7 +22,6 @@ def bhp_view(request):
         elif request.method == 'POST':
             if bhp_object.img :
                 cloudinary.uploader.destroy(bhp_object.img.public_id)
-                # bhp_object.img.delete()
             serializer = BHPSerializer(bhp_object, data=request.data, partial=True)  
             if serializer.is_valid():
                 serializer.save()
@@ -48,6 +47,8 @@ def lhp_view(request):
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
         
         elif request.method == 'POST':
+            if lhp_object.img :
+                cloudinary.uploader.destroy(lhp_object.img.public_id)
             serializer = LHPSerializer(lhp_object, data=request.data, partial=True)  
             if serializer.is_valid():
                 serializer.save()
