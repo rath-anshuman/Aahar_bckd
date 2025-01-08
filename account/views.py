@@ -4,7 +4,10 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
 
+
+@csrf_exempt
 @api_view(['POST'])
 def login(request):
     username = request.data.get('username')
@@ -17,7 +20,8 @@ def login(request):
     else:
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key, 'username': user.username})
-    
+
+@csrf_exempt
 @api_view(['POST'])
 def logout(request):
     try:

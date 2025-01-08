@@ -8,7 +8,7 @@ from .serializers import BHPSerializer, LHPSerializer
 import cloudinary
 
 
-# @api_view(['GET', 'POST'])
+@api_view(['GET', 'POST'])
 @parser_classes([MultiPartParser, FormParser])
 def bhp_view(request):
     """
@@ -17,12 +17,17 @@ def bhp_view(request):
     try:
         bhp_object, created = BHP.objects.get_or_create(id=1)
 
+        # Handle GET request
         if request.method == 'GET':
+            # Allow any user for GET request
+            permission_classes = [AllowAny]
             serializer = BHPSerializer(bhp_object)
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
-        
+
+        # Handle POST request
         elif request.method == 'POST':
-            # Enforce authentication for POST requests
+            # Enforce authentication for POST request
+            permission_classes = [IsAuthenticated]
             if not request.user.is_authenticated:
                 return JsonResponse({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -38,7 +43,7 @@ def bhp_view(request):
         return JsonResponse({'error': 'BHP object with id=1 does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
-# @api_view(['GET', 'POST'])
+@api_view(['GET', 'POST'])
 @parser_classes([MultiPartParser, FormParser])
 def lhp_view(request):
     """
@@ -47,12 +52,17 @@ def lhp_view(request):
     try:
         lhp_object, created = LHP.objects.get_or_create(id=1)
 
+        # Handle GET request
         if request.method == 'GET':
+            # Allow any user for GET request
+            permission_classes = [AllowAny]
             serializer = LHPSerializer(lhp_object)
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
-        
+
+        # Handle POST request
         elif request.method == 'POST':
-            # Enforce authentication for POST requests
+            # Enforce authentication for POST request
+            permission_classes = [IsAuthenticated]
             if not request.user.is_authenticated:
                 return JsonResponse({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -63,5 +73,6 @@ def lhp_view(request):
                 serializer.save()
                 return JsonResponse(serializer.data, status=status.HTTP_200_OK)
             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     except LHP.DoesNotExist:
         return JsonResponse({'error': 'LHP object with id=1 does not exist'}, status=status.HTTP_404_NOT_FOUND)
