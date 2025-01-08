@@ -6,6 +6,7 @@ from rest_framework import status
 from .models import BHP, LHP
 from .serializers import BHPSerializer, LHPSerializer
 import cloudinary
+from cloudinary.uploader import upload
 
 
 @api_view(['GET', 'POST'])
@@ -31,12 +32,26 @@ def bhp_view(request):
             if not request.user.is_authenticated:
                 return JsonResponse({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
+            # Delete old image from Cloudinary if it exists
             if bhp_object.img:
                 cloudinary.uploader.destroy(bhp_object.img.public_id)
+
+            # Handle new image upload from request
+            if 'img' in request.FILES:
+                # Upload new image to Cloudinary
+                new_img = request.FILES['img']
+                print(new_img)
+                cloudinary_response = upload(new_img)
+                # Save the new image URL or public_id to the model
+                bhp_object.img = cloudinary_response['secure_url']  # or cloudinary_response['public_id'] if using public_id
+                bhp_object.save()
+
+            # Update other fields if needed
             serializer = BHPSerializer(bhp_object, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
                 return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+
             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     except BHP.DoesNotExist:
@@ -66,12 +81,25 @@ def lhp_view(request):
             if not request.user.is_authenticated:
                 return JsonResponse({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
+            # Delete old image from Cloudinary if it exists
             if lhp_object.img:
                 cloudinary.uploader.destroy(lhp_object.img.public_id)
+
+            # Handle new image upload from request
+            if 'img' in request.FILES:
+                # Upload new image to Cloudinary
+                new_img = request.FILES['img']
+                cloudinary_response = upload(new_img)
+                # Save the new image URL or public_id to the model
+                lhp_object.img = cloudinary_response['secure_url']  # or cloudinary_response['public_id']
+                lhp_object.save()
+
+            # Update other fields if needed
             serializer = LHPSerializer(lhp_object, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
                 return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+
             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     except LHP.DoesNotExist:
