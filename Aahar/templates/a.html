@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Area</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      max-width: 90%;
+      width: 400px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      animation: fadeInDown 1s ease;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .redirect-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      font-size: 1rem;
+      color: #fff;
+      background: #28a745;
+      border: none;
+      border-radius: 25px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: fadeInUp 2s ease;
+    }
+
+    .redirect-btn:hover {
+      background: #218838;
+      box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .redirect-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+
+      .redirect-btn {
+        padding: 8px 18px;
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Admin Dashboard</h1>
+    <p>Welcome, visitor! This section is exclusively reserved for authorized personnel.</p>
+    <a href="https://new-aahar.vercel.app/index.html" class="redirect-btn">Go to Dashboard</a>
+  </div>
+</body>
+
+</html>
