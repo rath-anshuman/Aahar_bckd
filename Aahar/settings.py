@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-o1ng5rn5i27(&3azez^-76d=%v_-)fm5v6ux&rq-afan_v7p_9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','.vercel.app']
 
@@ -44,6 +44,15 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -136,3 +145,17 @@ cloudinary.config(
     api_secret="RC5xuQlXl9TZmPWquMJobg-ZW4E",
     secure=True,
 )
+
+
+import dj_database_url
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.lrgxnfjzfmobrlkezfba',
+        'PASSWORD': 'n$_Vu6x6QQM6zJV',
+        'HOST': 'aws-0-ap-south-1.pooler.supabase.com',
+        'PORT': '5432',
+}
+}
