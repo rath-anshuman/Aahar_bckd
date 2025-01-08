@@ -63,6 +63,5 @@ def lhp_view(request):
                 serializer.save()
                 return JsonResponse(serializer.data, status=status.HTTP_200_OK)
             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     except LHP.DoesNotExist:
         return JsonResponse({'error': 'LHP object with id=1 does not exist'}, status=status.HTTP_404_NOT_FOUND)
