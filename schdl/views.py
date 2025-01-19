@@ -29,8 +29,8 @@ def bhp_view(request):
                 return JsonResponse({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
             if bhp_object.img:
-                cloudinary.uploader.destroy(bhp_object.img.public_id)
-
+                cloudinary.api.delete_resources(bhp_object.img.public_id,invalidate=True)
+                
             if 'img' in request.FILES:
                 new_img = request.FILES['img']
                 print(new_img)
@@ -69,7 +69,7 @@ def lhp_view(request):
                 return JsonResponse({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
             if lhp_object.img:
-                cloudinary.uploader.destroy(lhp_object.img.public_id)
+                cloudinary.api.delete_resources(lhp_object.img.public_id,invalidate=True)
 
             if 'img' in request.FILES:
                 new_img = request.FILES['img']
