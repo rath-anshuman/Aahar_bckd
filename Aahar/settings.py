@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'schdl.apps.SchdlConfig',
+    'account.apps.AccountConfig',
 
     'corsheaders',
     'rest_framework',
