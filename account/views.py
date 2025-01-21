@@ -33,19 +33,3 @@ def logout(request):
     
 
 
-from datetime import date
-from .models import Visitor,VisitorSerializer
-from rest_framework.decorators import api_view, parser_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework import status
-
-@api_view(['GET'])
-def add_visitor(request):
-    if request.method == 'GET':
-        permission_classes = [AllowAny]
-        today = date.today()
-        visitor, created = Visitor.objects.get_or_create(day=today)
-        visitor.count += 1
-        visitor.save()
-        serializer = VisitorSerializer(visitor)
-        return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)

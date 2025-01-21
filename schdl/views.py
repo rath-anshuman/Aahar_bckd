@@ -9,6 +9,19 @@ import cloudinary
 from cloudinary.uploader import upload
 
 
+
+from datetime import date
+from account.models import Visitor
+
+def add_visitor():
+    today = date.today()
+    visitor, created = Visitor.objects.get_or_create(day=today)
+    visitor.count += 1
+    visitor.save()
+
+
+
+
 @api_view(['GET', 'POST'])
 @parser_classes([MultiPartParser, FormParser])
 def bhp_view(request):
@@ -20,6 +33,7 @@ def bhp_view(request):
         if request.method == 'GET':
             permission_classes = [AllowAny]
             serializer = BHPSerializer(bhp_object)
+            add_visitor()
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
 
         elif request.method == 'POST':
@@ -60,6 +74,7 @@ def lhp_view(request):
         if request.method == 'GET':
             permission_classes = [AllowAny]
             serializer = LHPSerializer(lhp_object)
+            add_visitor()
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
 
         elif request.method == 'POST':
