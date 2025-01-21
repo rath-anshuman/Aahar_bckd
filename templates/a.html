@@ -5,9 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Area</title>
+  <script src="https://unpkg.com/htmx.org"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* General Styles */
+    /* Same styles as provided earlier */
     body {
       margin: 0;
       padding: 0;
@@ -18,7 +19,6 @@
       align-items: center;
       min-height: 100vh;
       color: #fff;
-      overflow-x: hidden;
     }
 
     .container {
@@ -36,26 +36,6 @@
       margin: 10px 0;
       font-weight: 600;
       color: #fff;
-      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-      animation: fadeInDown 1s ease;
-    }
-
-    h2 {
-      font-size: 1.8rem;
-      margin-top: 30px;
-      animation: fadeIn 1.5s ease;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 25px;
-      line-height: 1.6;
-      animation: fadeIn 1.5s ease;
     }
 
     .redirect-btn {
@@ -69,8 +49,6 @@
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      animation: fadeInUp 2s ease;
-      font-weight: 500;
     }
 
     .redirect-btn:hover {
@@ -78,16 +56,11 @@
       box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
     }
 
-    /* Visitors Table Styles */
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
       font-size: 0.9rem;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      overflow: hidden;
-      animation: fadeIn 1.5s ease;
     }
 
     th, td {
@@ -114,111 +87,190 @@
       background: rgba(255, 255, 255, 0.3);
       transition: background 0.3s ease;
     }
+    /* From Uiverse.io by Li-Deheng */ 
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --color: hsl(0, 0%, 87%);
+  --animation: 2s ease-in-out infinite;
+}
 
-    /* Responsive Styles */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
+.loader .circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width:  10px;
+  height: 10px;
+  border: solid 2px var(--color);
+  border-radius: 50%;
+  margin: 0 10px;
+  background-color: transparent;
+  animation: circle-keys var(--animation);
+}
 
-      h2 {
-        font-size: 1.5rem;
-      }
+.loader .circle .dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width:  8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color);
+  animation: dot-keys var(--animation);
+}
 
-      p {
-        font-size: 1rem;
-      }
+.loader .circle .outline {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width:  12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: outline-keys var(--animation);
+}
 
-      .redirect-btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-      }
+.circle:nth-child(2) {
+  animation-delay: 0.3s;
+}
 
-      table {
-        font-size: 0.85rem;
-      }
-    }
+.circle:nth-child(3) {
+  animation-delay: 0.6s;
+}
 
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.8rem;
-      }
+.circle:nth-child(4) {
+  animation-delay: 0.9s;
+}
 
-      h2 {
-        font-size: 1.4rem;
-      }
+.circle:nth-child(5) {
+  animation-delay: 1.2s;
+}
 
-      p {
-        font-size: 0.9rem;
-      }
+.circle:nth-child(2) .dot {
+  animation-delay: 0.3s;
+}
 
-      .redirect-btn {
-        padding: 8px 18px;
-        font-size: 0.85rem;
-      }
-    }
+.circle:nth-child(3) .dot {
+  animation-delay: 0.6s;
+}
 
-    /* Animations */
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
+.circle:nth-child(4) .dot {
+  animation-delay: 0.9s;
+}
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+.circle:nth-child(5) .dot {
+  animation-delay: 1.2s;
+}
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
+.circle:nth-child(1) .outline {
+  animation-delay: 0.9s;
+}
 
-      to {
-        opacity: 1;
-      }
-    }
+.circle:nth-child(2) .outline {
+  animation-delay: 1.2s;
+}
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
+.circle:nth-child(3) .outline {
+  animation-delay: 1.5s;
+}
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+.circle:nth-child(4) .outline {
+  animation-delay: 1.8s;
+}
+
+.circle:nth-child(5) .outline {
+  animation-delay: 2.1s;
+}
+
+@keyframes circle-keys {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes dot-keys {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes outline-keys {
+  0% {
+    transform: scale(0);
+    outline: solid 20px var(--color);
+    outline-offset: 0;
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    outline: solid 0 transparent;
+    outline-offset: 20px;
+    opacity: 0;
+  }
+}
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h1>Admin Dashboard</h1>
+    <h2>Admin Dashboard</h2>
+    <h1>AAHAR</h1>
     <p>Welcome, visitor! This section is exclusively reserved for authorized personnel.</p>
-    <a href="https://new-aahar.vercel.app/index.html" class="redirect-btn">Go to Aahar</a>
+    <a href="https://new-aahar.vercel.app/index.html" class="redirect-btn">Go to Dashboard</a>
 
     <!-- Visitors Table -->
-    <h2>Daily Visitors</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Visitor Count</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for visitor in visitors %}
-        <tr>
-          <td>{{ visitor.day }}</td>
-          <td>{{ visitor.count }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <h2>Daily Visitors Live</h2>
+    <h3>
+      <div class="loader">
+        <div class="circle">
+          <div class="dot"></div>
+          <div class="outline"></div>
+        </div>
+        <div class="circle">
+          <div class="dot"></div>
+          <div class="outline"></div>
+        </div>
+        <div class="circle">
+          <div class="dot"></div>
+          <div class="outline"></div>
+        </div>
+        <div class="circle">
+          <div class="dot"></div>
+          <div class="outline"></div>
+        </div>
+      </div></h3>
+    <div hx-get="/fetch-visitors/" hx-trigger="load, every 6s" hx-target="tbody" hx-swap="innerHTML">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Visitor Count</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+      </table>
+    </div>
   </div>
 </body>
 
