@@ -28,13 +28,14 @@ def bhp_view(request):
                 return JsonResponse({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
             if bhp_object.img:
-                cloudinary.uploader.destroy(bhp_object.img.public_id)
+                cloudinary.uploader.destroy(bhp_object.img.public_id,invalidate=True)
+                cloudinary.uploader.destroy(bhp_object.pbid,invalidate=True)
 
             if 'img' in request.FILES:
                 new_img = request.FILES['img']
-                print(new_img)
                 cloudinary_response = upload(new_img)
                 bhp_object.img = cloudinary_response['secure_url']  
+                bhp_object.pbid = cloudinary_response['public_id']  
                 bhp_object.save()
 
             serializer = BHPSerializer(bhp_object, data=request.data, partial=True)
@@ -67,12 +68,14 @@ def lhp_view(request):
                 return JsonResponse({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
             if lhp_object.img:
-                cloudinary.uploader.destroy(lhp_object.img.public_id)
+                cloudinary.uploader.destroy(lhp_object.img.public_id,invalidate=True)
+                cloudinary.uploader.destroy(lhp_object.pbid,invalidate=True)
 
             if 'img' in request.FILES:
                 new_img = request.FILES['img']
                 cloudinary_response = upload(new_img)
-                lhp_object.img = cloudinary_response['secure_url'] 
+                lhp_object.img = cloudinary_response['secure_url']
+                lhp_object.pbid = cloudinary_response['public_id'] 
                 lhp_object.save()
 
             serializer = LHPSerializer(lhp_object, data=request.data, partial=True)
