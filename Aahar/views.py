@@ -13,4 +13,4 @@ def fetch_visitors(request):
 
 
 def abc(request):
-    return render(request, 'a.html')
+    return render(request, 'home.html')
