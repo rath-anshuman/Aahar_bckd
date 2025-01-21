@@ -74,7 +74,7 @@ def lhp_view(request):
         if request.method == 'GET':
             permission_classes = [AllowAny]
             serializer = LHPSerializer(lhp_object)
-            add_visitor()
+            # add_visitor()
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
 
         elif request.method == 'POST':
