@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Area</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     /* General Styles */
     body {
@@ -17,18 +18,25 @@
       align-items: center;
       min-height: 100vh;
       color: #fff;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     .container {
-      text-align: center;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 15px;
       padding: 40px 30px;
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(10px);
       max-width: 90%;
-      width: 400px;
+      width: 500px;
+      text-align: center;
+    }
+
+    h1, h2 {
+      margin: 10px 0;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     }
 
     h1 {
@@ -37,9 +45,16 @@
       animation: fadeInDown 1s ease;
     }
 
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 30px;
+      animation: fadeIn 1.5s ease;
+    }
+
     p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       margin-bottom: 25px;
+      line-height: 1.6;
       animation: fadeIn 1.5s ease;
     }
 
@@ -55,6 +70,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
       animation: fadeInUp 2s ease;
+      font-weight: 500;
     }
 
     .redirect-btn:hover {
@@ -62,10 +78,51 @@
       box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
     }
 
+    /* Visitors Table Styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      animation: fadeIn 1.5s ease;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      color: #fff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    th {
+      background: rgba(0, 0, 0, 0.6);
+      font-weight: 600;
+    }
+
+    td {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    tbody tr:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transition: background 0.3s ease;
+    }
+
     /* Responsive Styles */
     @media (max-width: 768px) {
       h1 {
         font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
       }
 
       p {
@@ -76,11 +133,19 @@
         padding: 10px 20px;
         font-size: 0.9rem;
       }
+
+      table {
+        font-size: 0.85rem;
+      }
     }
 
     @media (max-width: 480px) {
       h1 {
         font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
       }
 
       p {
@@ -135,6 +200,25 @@
     <h1>Admin Dashboard</h1>
     <p>Welcome, visitor! This section is exclusively reserved for authorized personnel.</p>
     <a href="https://new-aahar.vercel.app/index.html" class="redirect-btn">Go to Dashboard</a>
+
+    <!-- Visitors Table -->
+    <h2>Daily Visitors</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Visitor Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for visitor in visitors %}
+        <tr>
+          <td>{{ visitor.day }}</td>
+          <td>{{ visitor.count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </body>
 
