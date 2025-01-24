@@ -8,7 +8,8 @@ from .serializers import BHPSerializer, LHPSerializer
 import cloudinary
 from cloudinary.uploader import upload
 
-
+from datetime import datetime,timedelta
+from django.utils.timezone import now
 
 from datetime import date
 from account.models import Visitor
@@ -32,6 +33,9 @@ def bhp_view(request):
         bhp_object, created = BHP.objects.get_or_create(id=1)
         if request.method == 'GET':
             permission_classes = [AllowAny]
+            time_difference = now() - bhp_object.updated_at
+            if time_difference > timedelta(hours=3):
+                return JsonResponse({"message": "Image expired"}, status=status.HTTP_410_GONE)
             serializer = BHPSerializer(bhp_object)
             add_visitor()
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
@@ -73,8 +77,11 @@ def lhp_view(request):
         lhp_object, created = LHP.objects.get_or_create(id=1)
         if request.method == 'GET':
             permission_classes = [AllowAny]
+            time_difference = now() - lhp_object.updated_at
+            if time_difference > timedelta(hours=3):
+                return JsonResponse({"message": "Image expired"}, status=status.HTTP_410_GONE)
+            
             serializer = LHPSerializer(lhp_object)
-            # add_visitor()
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
 
         elif request.method == 'POST':
