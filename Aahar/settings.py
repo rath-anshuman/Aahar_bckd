@@ -147,8 +147,6 @@ cloudinary.config(
 )
 
 
-import dj_database_url
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

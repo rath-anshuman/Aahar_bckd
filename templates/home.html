@@ -8,7 +8,6 @@
   <script src="https://unpkg.com/htmx.org"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* Same styles as provided earlier */
     body {
       margin: 0;
       padding: 0;
@@ -32,7 +31,8 @@
       text-align: center;
     }
 
-    h1, h2 {
+    h1,
+    h2 {
       margin: 10px 0;
       font-weight: 600;
       color: #fff;
@@ -43,7 +43,7 @@
       padding: 12px 25px;
       font-size: 1rem;
       color: #fff;
-      background:rgb(252, 56, 56);
+      background: rgb(252, 56, 56);
       border: none;
       border-radius: 25px;
       text-decoration: none;
@@ -56,14 +56,32 @@
       box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
     }
 
+    .table-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .table-container {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      overflow-y: auto;
+
+    }
+
+    .table-container {
+      max-height: 200px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
       font-size: 0.9rem;
     }
 
-    th, td {
+    th,
+    td {
       padding: 12px;
       text-align: center;
       color: #fff;
@@ -71,12 +89,16 @@
     }
 
     th {
-      background: rgba(0, 0, 0, 0.6);
+      /* background: rgba(0, 0, 0, 0.6); */
+      background-color: #322E51;
       font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 0;
     }
 
     td {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(36, 12, 12, 0.1);
     }
 
     tbody tr:nth-child(even) {
@@ -87,146 +109,12 @@
       background: rgba(255, 255, 255, 0.3);
       transition: background 0.3s ease;
     }
-    /* From Uiverse.io by Li-Deheng */ 
-.loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  --color: hsl(0, 0%, 87%);
-  --animation: 2s ease-in-out infinite;
-}
 
-.loader .circle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width:  10px;
-  height: 10px;
-  border: solid 2px var(--color);
-  border-radius: 50%;
-  margin: 0 10px;
-  background-color: transparent;
-  animation: circle-keys var(--animation);
-}
-
-.loader .circle .dot {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width:  8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--color);
-  animation: dot-keys var(--animation);
-}
-
-.loader .circle .outline {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width:  12px;
-  height: 12px;
-  border-radius: 50%;
-  animation: outline-keys var(--animation);
-}
-
-.circle:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.circle:nth-child(3) {
-  animation-delay: 0.6s;
-}
-
-.circle:nth-child(4) {
-  animation-delay: 0.9s;
-}
-
-.circle:nth-child(5) {
-  animation-delay: 1.2s;
-}
-
-.circle:nth-child(2) .dot {
-  animation-delay: 0.3s;
-}
-
-.circle:nth-child(3) .dot {
-  animation-delay: 0.6s;
-}
-
-.circle:nth-child(4) .dot {
-  animation-delay: 0.9s;
-}
-
-.circle:nth-child(5) .dot {
-  animation-delay: 1.2s;
-}
-
-.circle:nth-child(1) .outline {
-  animation-delay: 0.9s;
-}
-
-.circle:nth-child(2) .outline {
-  animation-delay: 1.2s;
-}
-
-.circle:nth-child(3) .outline {
-  animation-delay: 1.5s;
-}
-
-.circle:nth-child(4) .outline {
-  animation-delay: 1.8s;
-}
-
-.circle:nth-child(5) .outline {
-  animation-delay: 2.1s;
-}
-
-@keyframes circle-keys {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: scale(1.5);
-    opacity: 0.5;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes dot-keys {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(0);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes outline-keys {
-  0% {
-    transform: scale(0);
-    outline: solid 20px var(--color);
-    outline-offset: 0;
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(1);
-    outline: solid 0 transparent;
-    outline-offset: 20px;
-    opacity: 0;
-  }
-}
+    .last-updated {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
   </style>
 </head>
 
@@ -239,51 +127,61 @@
 
     <!-- Visitors Table -->
     <h2>Daily Visitors Live</h2>
-    <h3>
-      <div class="loader">
-        <div class="circle">
-          <div class="dot"></div>
-          <div class="outline"></div>
-        </div>
-        <div class="circle">
-          <div class="dot"></div>
-          <div class="outline"></div>
-        </div>
-        <div class="circle">
-          <div class="dot"></div>
-          <div class="outline"></div>
-        </div>
-        <div class="circle">
-          <div class="dot"></div>
-          <div class="outline"></div>
-        </div>
-      </div></h3>
-    <div hx-get="/fetch-visitors/" hx-trigger="load, every 6s" hx-target="tbody" hx-swap="innerHTML">
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Visitor Count</th>
-          </tr>
-        </thead>
-        <tbody>
-        
-        </tbody>
-      </table>
+    <div class="loader">
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+    </div>
+
+    <div hx-get="/fetch-visitors/" hx-trigger="load, every 10s" hx-target="tbody" hx-swap="innerHTML">
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Visitor Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Table rows populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+      <div class="last-updated" id="last-updated">
+        <span></span>Last Image updated at: {{ updatedat|date:"M. d, Y, h:i A" }}</span>
+      </div>
     </div>
   </div>
-  <script>document.addEventListener('contextmenu', (event) => event.preventDefault());
+  <script>
+    document.addEventListener('contextmenu', (event) => event.preventDefault());
     document.addEventListener('keydown', (event) => {
       if (
-          (event.ctrlKey && event.shiftKey && event.key === 'I' || 'i') || // Ctrl+Shift+I
-          (event.ctrlKey && event.shiftKey && event.key === 'J' ||'j') || // Ctrl+Shift+J
-          (event.ctrlKey && event.key === 'U'|| 'U') ||                  // Ctrl+U
-          event.key === 'F12'                                     // F12
+        (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'i')) ||
+        (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) ||
+        (event.ctrlKey && (event.key === 'U' || event.key === 'u')) ||
+        event.key === 'F12'
       ) {
-          event.preventDefault();
+        event.preventDefault();
       }
-  });
-  </script>
-</body>
+    });
 
-</html>
+    // Update the "last updated" timestamp
+    function updateLastUpdated() {
+      const now = new Date();
+      document.querySelector('#last-updated span').textContent = now.toLocaleTimeString();
+    }
+
+    // Refresh the timestamp every time the table is upd
