@@ -34,7 +34,7 @@ def bhp_view(request):
         if request.method == 'GET':
             permission_classes = [AllowAny]
             time_difference = now() - bhp_object.updated_at
-            if time_difference > timedelta(hours=2):
+            if time_difference > timedelta(hours=3):
                 return JsonResponse({"message": "Image expired"}, status=status.HTTP_410_GONE)
             serializer = BHPSerializer(bhp_object)
             add_visitor()
@@ -78,7 +78,7 @@ def lhp_view(request):
         if request.method == 'GET':
             permission_classes = [AllowAny]
             time_difference = now() - lhp_object.updated_at
-            if time_difference > timedelta(hours=2):
+            if time_difference > timedelta(hours=3):
                 return JsonResponse({"message": "Image expired"}, status=status.HTTP_410_GONE)
             
             serializer = LHPSerializer(lhp_object)
