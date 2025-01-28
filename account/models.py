@@ -12,6 +12,10 @@ class Visitor(models.Model):
     def __str__(self):
         return f"{self.day} - {self.count}"
     
+
+
+
+    
 from rest_framework import serializers
 
 class VisitorSerializer(serializers.ModelSerializer):
