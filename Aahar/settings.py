@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -73,6 +72,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     
 ]
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'Aahar.urls'
 
