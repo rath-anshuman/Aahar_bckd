@@ -33,14 +33,17 @@ def bhp_view(request):
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
 
         elif request.method == 'POST':
-            permission_classes = [IsAuthenticated]
+            
             if not request.user.is_authenticated:
                 return JsonResponse({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
-            if bhp_object.img:
-                cloudinary.uploader.destroy(bhp_object.img.public_id,invalidate=True)
-                cloudinary.uploader.destroy(bhp_object.pbid,invalidate=True)
-
+            try: 
+                if bhp_object.img:
+                    cloudinary.uploader.destroy(bhp_object.img.public_id,invalidate=True)
+                    cloudinary.uploader.destroy(bhp_object.pbid,invalidate=True)
+            except :
+                print('Image not exist')
+            :
             if 'img' in request.FILES:
                 new_img = request.FILES['img']
                 cloudinary_response = upload(new_img)
@@ -68,7 +71,7 @@ def lhp_view(request):
     try:
         lhp_object, created = LHP.objects.get_or_create(id=1)
         if request.method == 'GET':
-            permission_classes = [AllowAny]
+            
             time_difference = now() - lhp_object.updated_at
             if time_difference > timedelta(hours=3):
                 return JsonResponse({"message": "Image expired"}, status=status.HTTP_410_GONE)
@@ -77,13 +80,16 @@ def lhp_view(request):
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
 
         elif request.method == 'POST':
-            permission_classes = [IsAuthenticated]
+
             if not request.user.is_authenticated:
                 return JsonResponse({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 
-            if lhp_object.img:
-                cloudinary.uploader.destroy(lhp_object.img.public_id,invalidate=True)
-                cloudinary.uploader.destroy(lhp_object.pbid,invalidate=True)
+            try: 
+                if lhp_object.img:
+                    cloudinary.uploader.destroy(lhp_object.img.public_id,invalidate=True)
+                    cloudinary.uploader.destroy(lhp_object.pbid,invalidate=True)
+            except :
+                print('Image not exist')
 
             if 'img' in request.FILES:
                 new_img = request.FILES['img']
