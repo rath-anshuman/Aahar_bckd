@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 ]
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -164,3 +163,16 @@ DATABASES = {
         'PORT': '5432',
 }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'neondb',  # Database name from your connection string
+#         'USER': 'neondb_owner',
+#         'PASSWORD': 'npg_9IsdXwlnY6pO',
+#         'HOST': 'ep-plain-scene-a19e0f0a-pooler.ap-southeast-1.aws.neon.tech',
+#         'PORT': 5432,
+#         'OPTIONS': {
+#             'sslmode': 'require'  # Ensure SSL connection
+#         },
+#     }
+# }

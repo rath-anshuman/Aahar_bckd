@@ -46,7 +46,8 @@
       const formData = new FormData();
       formData.append('img', file);
 
-      const API_URL = 'https://aahar-bckd.vercel.app/api/bhp/'; // Replace with your API endpoint
+      const API_URL = 'http://127.0.0.1:8000/api/bhppost/'; // Correct API URL
+ // Replace with your API endpoint
       const API_TOKEN = 'c9e1c7f100db1a8edb6c4e73ba6f0f16c0b115df'; // Replace with your API token
 
       try {
@@ -55,7 +56,7 @@
         const response = await fetch(API_URL, {
           method: 'POST',
           headers: {
-            'Authorization': `token ${API_TOKEN}`,
+            'Authorization': `Token ${API_TOKEN}`,
           },
           body: formData,
         });

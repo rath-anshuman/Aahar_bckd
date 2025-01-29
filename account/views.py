@@ -28,19 +28,12 @@ def logout(request):
     try:
         token = Token.objects.get(user=request.user)
         token.delete()
-        return JsonResponse({'message': 'Successfully logged out'}, status=200)
+        return Response({'message': 'Successfully logged out'}, status=200)
     except Token.DoesNotExist:
-        return JsonResponse({'error': 'Invalid request or user not logged in'}, status=400)
+        return Response({'error': 'Invalid request or user not logged in'}, status=400)
+    
 
-@csrf_exempt
-@api_view(['POST'])
-def logout(request):
-    try:
-        token = Token.objects.get(user=request.user)
-        token.delete()
-        return JsonResponse({'message': 'Successfully logged out'}, status=200)
-    except Token.DoesNotExist:
-        return JsonResponse({'error': 'Invalid request or user not logged in'}, status=400)
+
 
 @csrf_exempt
 @api_view(['POST'])
