@@ -42,9 +42,16 @@ def logout(request):
     except Token.DoesNotExist:
         return JsonResponse({'error': 'Invalid request or user not logged in'}, status=400)
 
+ALLOWED_DOMAIN="https://new-aahar.vercel.app"
+
 @csrf_exempt
 @api_view(['POST'])
 def visitorplus(request):
+    origin = request.META.get('HTTP_ORIGIN', '')
+    referer = request.META.get('HTTP_REFERER', '')
+
+    if ALLOWED_DOMAIN not in origin and ALLOWED_DOMAIN not in referer:
+        return JsonResponse({"error": "Unauthorized domain"}, status=403)
     if request.method == 'POST':
         today = date.today()
         visitor, created = Visitor.objects.get_or_create(day=today)
