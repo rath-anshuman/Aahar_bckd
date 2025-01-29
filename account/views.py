@@ -8,9 +8,18 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Visitor
 from datetime import date
 
+ALLOWED_DOMAIN="https://new-aahar.vercel.app"
+
 @csrf_exempt
 @api_view(['POST'])
 def login(request):
+
+    origin = request.META.get('HTTP_ORIGIN', '')
+    referer = request.META.get('HTTP_REFERER', '')
+
+    if ALLOWED_DOMAIN not in origin and ALLOWED_DOMAIN not in referer:
+        return JsonResponse({"error": "Unauthorized domain"}, status=403)
+    
     username = request.data.get('username')
     pssd = request.data.get('password')
 
@@ -22,15 +31,7 @@ def login(request):
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key, 'username': user.username})
 
-@csrf_exempt
-@api_view(['POST'])
-def logout(request):
-    try:
-        token = Token.objects.get(user=request.user)
-        token.delete()
-        return JsonResponse({'message': 'Successfully logged out'}, status=200)
-    except Token.DoesNotExist:
-        return JsonResponse({'error': 'Invalid request or user not logged in'}, status=400)
+
 
 @csrf_exempt
 @api_view(['POST'])
@@ -42,7 +43,7 @@ def logout(request):
     except Token.DoesNotExist:
         return JsonResponse({'error': 'Invalid request or user not logged in'}, status=400)
 
-ALLOWED_DOMAIN="https://new-aahar.vercel.app"
+
 
 @csrf_exempt
 @api_view(['POST'])
