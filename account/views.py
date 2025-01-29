@@ -18,11 +18,11 @@ ALLOWED_DOMAIN = [
 @api_view(['POST'])
 def login(request):
 
-    origin = request.META.get('HTTP_ORIGIN', '')
-    referer = request.META.get('HTTP_REFERER', '')
+    # origin = request.META.get('HTTP_ORIGIN', '')
+    # referer = request.META.get('HTTP_REFERER', '')
 
-    if ALLOWED_DOMAIN not in origin and ALLOWED_DOMAIN not in referer:
-        return JsonResponse({"error": "Unauthorized domain"}, status=403)
+    # if ALLOWED_DOMAIN not in origin and ALLOWED_DOMAIN not in referer:
+    #     return JsonResponse({"error": "Unauthorized domain"}, status=403)
     
     username = request.data.get('username')
     pssd = request.data.get('password')
