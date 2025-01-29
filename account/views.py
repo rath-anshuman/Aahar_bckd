@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Visitor
 from datetime import date
 
-ALLOWED_DOMAIN="https://new-aahar.vercel.app"
+ALLOWED_DOMAIN=["https://new-aahar.vercel.app","https://new-aahar.vercel.app/BHadminView.html","https://new-aahar.vercel.app/LHadminView.html"]
 
 @csrf_exempt
 @api_view(['POST'])
