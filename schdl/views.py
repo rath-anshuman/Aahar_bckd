@@ -43,7 +43,7 @@ def bhp_view(request):
                     cloudinary.uploader.destroy(bhp_object.pbid,invalidate=True)
             except :
                 print('Image not exist')
-            :
+                
             if 'img' in request.FILES:
                 new_img = request.FILES['img']
                 cloudinary_response = upload(new_img)
