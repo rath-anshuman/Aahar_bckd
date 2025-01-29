@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
-
+from .models import Visitor
+from datetime import date
 
 @csrf_exempt
 @api_view(['POST'])
@@ -27,9 +28,26 @@ def logout(request):
     try:
         token = Token.objects.get(user=request.user)
         token.delete()
-        return Response({'message': 'Successfully logged out'}, status=200)
+        return JsonResponse({'message': 'Successfully logged out'}, status=200)
     except Token.DoesNotExist:
-        return Response({'error': 'Invalid request or user not logged in'}, status=400)
-    
+        return JsonResponse({'error': 'Invalid request or user not logged in'}, status=400)
 
+@csrf_exempt
+@api_view(['POST'])
+def logout(request):
+    try:
+        token = Token.objects.get(user=request.user)
+        token.delete()
+        return JsonResponse({'message': 'Successfully logged out'}, status=200)
+    except Token.DoesNotExist:
+        return JsonResponse({'error': 'Invalid request or user not logged in'}, status=400)
 
+@csrf_exempt
+@api_view(['POST'])
+def visitorplus(request):
+    if request.method == 'POST':
+        today = date.today()
+        visitor, created = Visitor.objects.get_or_create(day=today)
+        visitor.count += 1
+        visitor.save()
+        return JsonResponse({f'{today}':visitor.count})
